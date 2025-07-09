@@ -1,0 +1,26 @@
+module Main where
+
+-- Parametric type synonym definition
+type Entity a = (a, String)  -- First element of type 'a', second is address string
+
+-- Example entity types
+type Person = String
+type Company = String
+type ProductID = Int
+
+-- Example entities
+personEntity :: Entity Person
+personEntity = ("John Doe", "123 Main St, Anytown")
+
+companyEntity :: Entity Company
+companyEntity = ("Acme Corp", "456 Business Ave, Industry City")
+
+productEntity :: Entity ProductID
+productEntity = (1001, "Warehouse 3, Shelf 42B")
+
+main :: IO ()
+main = do
+    putStrLn "Example Entities:"
+    print personEntity
+    print companyEntity
+    print productEntity
