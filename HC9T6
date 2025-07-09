@@ -1,0 +1,45 @@
+module Main where
+
+-- Recursive Tweet type definition
+data Tweet = Tweet
+    { content :: String
+    , likes :: Int
+    , comments :: [Tweet]  
+    }
+    deriving (Show, Eq)
+
+-- Example tweet with nested comments
+exampleTweet :: Tweet
+exampleTweet = Tweet
+    { content = "Haskell is awesome!"
+    , likes = 42
+    , comments =
+        [ Tweet
+            { content = "I agree!"
+            , likes = 10
+            , comments = []
+            }
+        , Tweet
+            { content = "Prove it"
+            , likes = 2
+            , comments =
+                [ Tweet
+                    { content = "Here's a proof..."
+                    , likes = 5
+                    , comments = []
+                }]
+            }
+        ]
+    }
+
+-- Function to count all comments (direct and nested)
+countAllComments :: Tweet -> Int
+countAllComments tweet = length (comments tweet) + sum (map countAllComments (comments tweet))
+
+main :: IO ()
+main = do
+    putStrLn "Example Tweet:"
+    print exampleTweet
+    
+    putStrLn "\nComment Statistics:"
+    putStrLn $ "Total comments: " ++ show (countAllComments exampleTweet)
