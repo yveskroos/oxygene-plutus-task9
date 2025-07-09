@@ -1,0 +1,32 @@
+module Main where
+
+-- Recursive sequence definition
+data Sequence a = Empty          -- End of sequence
+                | Node a (Sequence a)  -- Value and link to next node
+                deriving (Show, Eq)
+
+-- Example sequences
+numSequence :: Sequence Int
+numSequence = Node 1 (Node 2 (Node 3 Empty))
+
+strSequence :: Sequence String
+strSequence = Node "a" (Node "b" (Node "c" Empty))
+
+-- Basic operations
+sequenceLength :: Sequence a -> Int
+sequenceLength Empty = 0
+sequenceLength (Node _ next) = 1 + sequenceLength next
+
+sequenceToList :: Sequence a -> [a]
+sequenceToList Empty = []
+sequenceToList (Node x next) = x : sequenceToList next
+
+main :: IO ()
+main = do
+    putStrLn "Example Sequences:"
+    print numSequence
+    print strSequence
+    
+    putStrLn "\nSequence Operations:"
+    putStrLn $ "Length: " ++ show (sequenceLength numSequence)
+    putStrLn $ "As list: " ++ show (sequenceToList strSequence)
