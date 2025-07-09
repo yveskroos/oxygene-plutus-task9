@@ -1,0 +1,24 @@
+module Main where
+
+data Sequence a = Empty | Node a (Sequence a)
+    deriving (Show)
+
+-- Element check function
+elemSeq :: (Eq a) => a -> Sequence a -> Bool
+elemSeq _ Empty = False
+elemSeq x (Node y next) = x == y || elemSeq x next
+
+-- Example sequence
+exampleSeq :: Sequence Int
+exampleSeq = Node 1 (Node 2 (Node 3 Empty))
+
+main :: IO ()
+main = do
+    putStrLn "Element check examples:"
+    putStrLn $ "Contains 2? " ++ show (elemSeq 2 exampleSeq)  
+    putStrLn $ "Contains 5? " ++ show (elemSeq 5 exampleSeq)  
+    
+    -- With strings
+    let strSeq = Node "a" (Node "b" (Node "c" Empty))
+    putStrLn $ "Contains 'b'? " ++ show (elemSeq "b" strSeq)  
+    putStrLn $ "Contains 'x'? " ++ show (elemSeq "x" strSeq)  
