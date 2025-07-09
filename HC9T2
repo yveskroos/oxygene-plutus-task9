@@ -1,0 +1,28 @@
+module Main where
+
+-- Parametric Box type definition
+data Box a = Empty       -- Empty box case
+           | Has a       -- Box containing a value of type 'a'
+           deriving (Show, Eq)
+
+-- Example usage with different types
+intBox :: Box Int
+intBox = Has 42
+
+emptyBox :: Box String
+emptyBox = Empty
+
+maybeExtract :: Box a -> Maybe a
+maybeExtract Empty = Nothing
+maybeExtract (Has x) = Just x
+
+main :: IO ()
+main = do
+    putStrLn "Box Examples:"
+    print $ Has "Hello"     -- Box String
+    print $ Has 3.14        -- Box Double
+    print $ Empty           -- Box a (polymorphic empty)
+    
+    putStrLn "\nExtraction Examples:"
+    print $ maybeExtract (Has 100)  
+    print $ maybeExtract Empty       
