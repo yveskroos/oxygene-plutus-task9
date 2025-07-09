@@ -1,0 +1,46 @@
+module Main where
+
+data Tweet = Tweet
+    { content :: String
+    , likes :: Int
+    , comments :: [Tweet]
+    }
+    deriving (Show, Eq)
+
+-- Recursive engagement calculation
+engagement :: Tweet -> Int
+engagement tweet = likes tweet + sum (map engagement (comments tweet)
+
+-- Example tweet with nested comments
+exampleTweet :: Tweet
+exampleTweet = Tweet
+    { content = "Haskell is awesome!"
+    , likes = 42
+    , comments =
+        [ Tweet
+            { content = "I agree!"
+            , likes = 10
+            , comments = []
+            }
+        , Tweet
+            { content = "Prove it"
+            , likes = 2
+            , comments =
+                [ Tweet
+                    { content = "Here's a proof..."
+                    , likes = 5
+                    , comments = []
+                }]
+            }
+        ]
+    }
+
+main :: IO ()
+main = do
+    putStrLn "Example Tweet Engagement:"
+    print $ engagement exampleTweet  -- Should be 42 + 10 + 2 + 5 = 59
+    
+    putStrLn "\nBreakdown:"
+    putStrLn $ "Main tweet: " ++ show (likes exampleTweet)
+    putStrLn $ "First comment: " ++ show (engagement (comments exampleTweet !! 0))
+    putStrLn $ "Second comment: " ++ show (engagement (comments exampleTweet !! 1))
