@@ -1,0 +1,19 @@
+module Main where
+
+data Box a = Empty | Has a
+    deriving (Show, Eq)
+
+-- Function to add to box contents
+addN :: (Num a) => a -> Box a -> Box a
+addN _ Empty = Empty       
+addN n (Has x) = Has (x + n)  
+
+main :: IO ()
+main = do
+    putStrLn "Adding to numbers in boxes:"
+    print $ addN 5 (Has 10)     
+    print $ addN 3 (Has 2.5)   
+    print $ addN 7 Empty        
+    
+    -- Works with any Num type
+    print $ addN 1 (Has (-3))  
