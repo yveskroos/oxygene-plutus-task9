@@ -1,0 +1,26 @@
+module Main where
+
+data Box a = Empty | Has a
+    deriving (Show, Eq)
+
+-- Safe extraction with default value
+extract :: a -> Box a -> a
+extract defaultVal Empty = defaultVal  
+extract _ (Has x) = x                 
+
+main :: IO ()
+main = do
+    putStrLn "Extraction Examples:"
+    
+    -- With Int boxes
+    print $ extract 0 (Has 42)       
+    print $ extract 0 Empty          
+    
+    -- With String boxes
+    print $ extract "default" (Has "hello") 
+    print $ extract "default" Empty          
+    
+    -- With custom types
+    data Color = Red | Green | Blue deriving Show
+    print $ extract Red (Has Green)  
+    print $ extract Red Empty       
